@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <title>Sunglow Academy</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #000;
+      color: #f5f5f5;
+    }
+    .navbar,
+    .footer-info,
+    .contact,
+    .socials,
+    .slider-section,
+    .course-card,
+    .why-box,
+    .testimonials,
+    .hero,
+    .about,
+    .courses,
+    .why,
+    footer {
+      background: #13021d!important;
+      color: #f5f5f5 !important;
+      border: none;
+    }
+    a, a:visited {
+      color: #ffd700;
+    }
+    .btn {
+      background: #771794;
+      color: #181818;
+      border: none;
+    }
+    .btn:hover {
+      background: #fff;
+      color: #181818;
+    }
+    .slider img,
+    .course-card img,
+    .hero-img img {
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .slider-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #13021d;
+      padding: 40px 0;
+    }
+    .carousel {
+      position: relative;
+      width: 1100px;   /* Increased width */
+      height: 500px;   /* Increased height */
+      perspective: 1400px;
+      overflow: visible;
+    }
+    .carousel-slide {
+      position: absolute;
+      top: 0; left: 50%;
+      width: 800px;    /* Increased width */
+      height: 500px;   /* Increased height */
+      object-fit: cover;
+      border: 6px solid rgba(255, 255, 255, 0.3); /* Transparent white border */
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateX(-50%) scale(0.8) rotateY(30deg);
+      transition: 
+        opacity 0.8s,
+        transform 0.8s;
+      z-index: 1;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      transform: translateX(-50%) scale(1) rotateY(0deg);
+      z-index: 3;
+    }
+    .carousel-slide.prev {
+      opacity: 0.6;
+      transform: translateX(-120%) scale(0.8) rotateY(20deg);
+      z-index: 2;
+    }
+    .carousel-slide.next {
+      opacity: 0.6;
+      transform: translateX(20%) scale(0.8) rotateY(-20deg);
+      z-index: 2;
+    }
+    /*.logo h1 {
+      background: linear-gradient(90deg, #ffd700, #771794, #C8C6E3, #fff);
+      background-size: 200% 200%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: gradientTextMove 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes gradientTextMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }*/
+
+    .logo h1 {
+  background: linear-gradient(90deg, #d637a6, #ab46ca, #b60c4d, #e4b2b2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+
+.logo h1 span {
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Section 1: Header, Logo, Navigation, Slides -->
+  <section class="section-header">
+    <header class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="Sunglow Logo">
+        <h1>SUNGLOW &nbsp;<span>ACADEMY</span></h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Faculty</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#" class="btn">Enroll Now</a></li>
+        </ul>
+      </nav>
+    </header>
+    <section class="slider-section">
+      <div class="carousel">
+        <div class="carousel-slide active">
+          <img src="slide1.jpg" alt="Slider 1">
+          <div class="slide-caption">
+            <h2>Shape Your Future with Sunglow Academy</h2>
+            <h4>100% Skill-Based Learning for Better Opportunities</h4>
+            <p>Get trained, certified, and ready for internships and job placements in top IT companies.</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="slide2.jpg" alt="Slider 2">
+          <div class="slide-caption">
+            <h2>Expert Faculty & Mentorship</h2>
+            <h4>Learn from Industry Professionals</h4>
+            <p>Our trainers bring real-world experience and guidance to help you succeed in your IT career.</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="slide3.jpg" alt="Slider 3">
+          <div class="slide-caption">
+            <h2>Live Projects & Internships</h2>
+            <h4>Hands-On Practical Training</h4>
+            <p>Work on live projects and gain internship experience to build your portfolio and confidence.</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="slide4.jpg" alt="Slider 4">
+          <div class="slide-caption">
+            <h2>Placement Assistance</h2>
+            <h4>Launch Your IT Career</h4>
+            <p>We help you connect with top IT companies for job placements and career growth.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- Section 2: Hero, Cards, Student Image -->
+  <section class="section-hero">
+    <div class="hero">
+      <div class="hero-text">
+        <h2>Empowering<br>Future Innovators<br>in IT</h2>
+        <a href="#" class="btn">Enroll Now</a>
+      </div>
+      <div class="hero-img-overlap">
+        <img src="studying student.jpg" class="main-img" alt="Student studying">
+        <img src="card1.jpg" class="card-img card1" alt="Card 1">
+        <img src="card4.jpg" class="card-img card4" alt="Card 4">
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Section 3: About Sunglow Academy -->
+  <section class="section-about">
+    <div class="about">
+      <h2>About Sunglow Academy</h2>
+      <p>Sunglow Academy is a leading IT institute providing hands-on training
+         in software development, web technologies, and cloud computing to prepare
+         students for successful careers.</p>
+    </div>
+  </section>
+
+  <!-- Section 4: Popular Courses -->
+  <section class="section-courses">
+    <div class="courses">
+      <h2>Popular Courses</h2>
+      <div class="course-container">
+        <div class="course-card">
+          <img src="web development.jpg" alt="Web Development">
+          <h3>Web Development</h3>
+          <button>View Details</button>
+        </div>
+        <div class="course-card">
+          <img src="java programming.jpg" alt="Java Programming">
+          <h3>Java Programming</h3>
+          <button>View Details</button>
+        </div>
+        <div class="course-card">
+          <img src="python programming.jpeg" alt="Python">
+          <h3>Python programming</h3>
+          <button>View Details</button>
+        </div>
+        <div class="course-card">
+          <img src="aws devops.webp" alt="AWS / DevOps">
+          <h3>AWS / DevOps</h3>
+          <button>View Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Info, Testimonials, Why Choose Us, Upcoming Batches, Socials -->
+  <section class="section-info">
+    <div class="why">
+      <div class="why-box">
+        <h2>Why Choose Us</h2>
+        <ul>
+          <li>✅ Experienced Trainers</li>
+          <li>✅ 100% Practical Learning</li>
+          <li>✅ Placement Assistance</li>
+          <li>✅ Live Projects & Internships</li>
+        </ul>
+      </div>
+      <div class="testimonials">
+        <h2>Student Testimonials</h2>
+        <p>"Sunglow Academy helped me build a solid foundation in programming.
+        The hands-on approach and supportive teachers made the difference!"</p>
+        <h4>- Mark J.</h4>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-info">
+        <h3>Upcoming Batches</h3>
+        <p>New batch starts on August 15</p>
+      </div>
+      <div class="contact">
+        <p>info@sunglowacademy.com</p>
+        <p>+91 7720 489 7896</p>
+      </div>
+      <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </footer>
+  </section>
+
+  <script>
+    const slides = document.querySelectorAll('.carousel-slide');
+    let current = 0;
+
+    function showSlides() {
+      slides.forEach((slide, idx) => {
+        slide.classList.remove('active', 'prev', 'next');
+        if (idx === current) {
+          slide.classList.add('active');
+        } else if (idx === (current - 1 + slides.length) % slides.length) {
+          slide.classList.add('prev');
+        } else if (idx === (current + 1) % slides.length) {
+          slide.classList.add('next');
+        }
+      });
+    }
+
+    showSlides();
+    setInterval(() => {
+      current = (current + 1) % slides.length;
+      showSlides();
+    }, 3000);
+  </script>
+</body>
+</html>
