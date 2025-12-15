@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheCodeCrafter</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #080710;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #FF2DF7;
+      opacity: 0.8;
+      transition: background 0.5s;
+    }
+    body.toggle-active .particle {
+      background: #26a7fd;
+    }
+    .background {
+      width: 430px;
+      height: 520px;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .background .shape {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      border-radius: 50%;
+    }
+    .shape:first-child {
+      background: linear-gradient(to right,#00F0FF, #5200FF);
+      left: -80px;
+      top: -80px;
+    }
+    .shape:last-child {
+      background: linear-gradient(to right, #5200FF, #FF2DF7);
+      right: -30px;
+      bottom: -80px;
+    }
+    .auth-container {
+      background: rgba(255,255,255,0.13);
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(8,7,16,0.6);
+      position: relative;
+      overflow: hidden;
+      width: 768px;
+      max-width: 100%;
+      min-height: 480px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .auth-container p, .auth-container span, .auth-container a, .auth-container h2 {
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+    .auth-container button {
+      background-color: #ffffff;
+      color: #080710;
+      font-size: 16px;
+      padding: 12px 45px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .auth-container button.hidden {
+      background-color: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+    }
+    .auth-container form {
+      background: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 40px;
+      height: 100%;
+    }
+    .auth-container input {
+      background-color: rgba(255,255,255,0.07);
+      border: none;
+      margin: 8px 0;
+      padding: 12px 15px;
+      font-size: 15px;
+      border-radius: 8px;
+      width: 100%;
+      outline: none;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+    ::placeholder {
+      color: #e5e5e5;
+    }
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      transition: all 0.6s ease-in-out;
+    }
+    .sign-in {
+      left: 0;
+      width: 50%;
+      z-index: 2;
+      opacity: 1;
+      transition: all 0.6s ease-in-out;
+    }
+    .auth-container.active .sign-in {
+      transform: translateX(100%);
+      opacity: 0;
+      z-index: 1;
+    }
+    .sign-up {
+      left: 0;
+      width: 50%;
+      opacity: 0;
+      z-index: 1;
+      transition: all 0.6s ease-in-out;
+    }
+    .auth-container.active .sign-up {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+      animation: move 0.6s;
+    }
+    @keyframes move {
+      0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+      }
+      50%, 100% {
+        opacity: 1;
+        z-index: 5;
+      }
+    }
+    .social-icons {
+      margin: 20px 0;
+    }
+    .social-icons a {
+      border: 1px solid #ccc;
+      border-radius: 20%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 3px;
+      width: 40px;
+      height: 40px;
+      color: #fff;
+      font-size: 18px;
+      transition: background 0.2s;
+      background: rgba(255,255,255,0.27);
+    }
+    .social-icons a:hover {
+      background: rgba(255,255,255,0.47);
+      color: #080710;
+    }
+    .toggle-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 57%;
+      height: 100%;
+      overflow: hidden;
+      transition: all 0.6s ease-in-out;
+      border-radius: 150px 0 0 100px;
+      z-index: 1000;
+    }
+    .auth-container.active .toggle-container {
+      transform: translateX(-100%);
+      border-radius: 0 150px 100px 0;
+    }
+    .toggle {
+      background: linear-gradient(to right, #00F0FF 4%, #5200FF 57%, #FF2DF7 115%);
+      color: #fff;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: all 0.6s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-container.active .toggle {
+      transform: translateX(50%);
+    }
+    .toggle-panel {
+      position: absolute;
+      width: 45%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 50px;
+      text-align: center;
+      top: 0;
+      transform: translateX(0);
+      transition: all 0.6s ease-in-out;
+    }
+    .toggle-left {
+      transform: translateX(-200%);
+      left: 0;
+    }
+    .auth-container.active .toggle-left {
+      transform: translateX(0);
+    }
+    .toggle-right {
+      right: 0;
+      transform: translateX(0);
+    }
+    .auth-container.active .toggle-right {
+      transform: translateX(200%);
+    }
+    @media (max-width: 900px) {
+      .auth-container {
+        width: 100vw;
+        min-width: 320px;
+      }
+      .background {
+        width: 100vw;
+        height: 60vw;
+        min-width: 320px;
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container"></div>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="auth-container" id="auth-container">
+    <!-- Sign In Form -->
+    <div class="form-container sign-in">
+      <form autocomplete="off" action="log.php" method="POST">
+        <h2>Sign In</h2>
+        <span></span>
+        <div id="login-error" style="color:red; font-weight:600; margin-bottom:10px; display:none;">
+          Wrong credentials
+        </div>
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <a href="#">Forgot your password?</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+    <!-- Sign Up Form -->
+    <div class="form-container sign-up">
+      <form autocomplete="off" action="reg.php" method="POST">
+        <h2>Create Account</h2>
+        <span></span>
+        <input type="text" name="name" placeholder="Name" />
+        <input type="email" name="email" placeholder="Email" />
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+    <!-- Toggle Panels -->
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h2>Welcome Back!</h2>
+          <p>To keep connected with us please login with your personal info</p>
+          <button class="hidden" id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h2>Hello, Student!</h2>
+          <p>Enter your personal details and start your journey with us</p>
+          <button class="hidden" id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Forgot Password Popup -->
+  <div id="forgot-popup" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; backdrop-filter: blur(8px); background: rgba(0,0,0,0.3); align-items:center; justify-content:center;">
+    <div style="background: rgba(255,255,255,0.18); border-radius:18px; padding:40px 30px; box-shadow:0 0 30px rgba(8,7,16,0.3); color:#ffffff; font-size:20px; font-weight:600; text-align:center; min-width:300px; position:relative;">
+      Contact admin to access your account. <br>Avanti Thakare , Gehana Pandiya<br>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=thecodecrafters@gmail.com&su=Password%20Reset%20-%20Write%20Your%20Username%20and%20Contact%20Number" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   style="display:inline-block; margin-top:25px; padding:10px 30px; border:none; border-radius:8px; background:#1845ad; color:#fff; font-size:16px; text-decoration:none; cursor:pointer;">
+   Mail
+</a>
+
+      <button onclick="closeForgotPopup()" style="margin-top:25px; padding:13px 30px; border:none; border-radius:8px; background:#1845ad; color:#fff; font-size:16px; cursor:pointer;">Close</button>
+    </div>
+  </div>
+  <!-- Registration Success Popup -->
+  <div id="reg-success-popup" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; backdrop-filter: blur(8px); background: rgba(0,0,0,0.3); align-items:center; justify-content:center;">
+    <div style="background: rgba(255,255,255,0.18); border-radius:18px; padding:40px 30px; box-shadow:0 0 30px rgba(8,7,16,0.3); color:#23a2f6; font-size:20px; font-weight:600; text-align:center; min-width:300px; position:relative;">
+      Registration Successful!<br>You can now sign in.
+      <button onclick="closeRegSuccessPopup()" style="margin-top:25px; padding:10px 30px; border:none; border-radius:8px; background:#1845ad; color:#fff; font-size:16px; cursor:pointer;">Close</button>
+    </div>
+  </div>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script>
+    // Particle animation
+    const container = document.querySelector('.container');
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    function addAnimation() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.left = random(0, container.clientWidth) + 'px';
+      particle.style.top = random(0, container.clientHeight) + 'px';
+      container.appendChild(particle);
+      anime({
+        targets: particle,
+        translateX: random(-200, 200),
+        translateY: random(-150, 150),
+        scale: [
+          { value: 0, duration: 0 },
+          { value: 1, duration: 1000 },
+          { value: 0, duration: 1000 }
+        ],
+        opacity: [
+          { value: 1, duration: 500 },
+          { value: 0, duration: 1000 }
+        ],
+        easing: 'easeInOutSine',
+        duration: 2000,
+        delay: random(0, 1000),
+        loop: true
+      });
+    }
+    for (let i = 0; i < 100; i++) {
+      addAnimation();
+    }
+
+    // Sliding login/register
+    const authContainer = document.getElementById("auth-container");
+    const registerBtn = document.getElementById("register");
+    const loginBtn = document.getElementById("login");
+
+    registerBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      authContainer.classList.add("active");
+      document.body.classList.add("toggle-active");
+    });
+
+    loginBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      authContainer.classList.remove("active");
+      document.body.classList.remove("toggle-active");
+    });
+
+    // Show error if error=1 in URL
+    if (window.location.search.includes('error=1')) {
+      document.getElementById('login-error').style.display = 'block';
+    }
+
+    // Forgot password popup logic
+    document.querySelector('.sign-in a').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('forgot-popup').style.display = 'flex';
+    });
+    function closeForgotPopup() {
+      document.getElementById('forgot-popup').style.display = 'none';
+    }
+
+    // Close registration success popup
+    function closeRegSuccessPopup() {
+      document.getElementById('reg-success-popup').style.display = 'none';
+    }
+
+    // Show registration success popup if reg=success in URL
+    if (window.location.search.includes('reg=success')) {
+      document.getElementById('reg-success-popup').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>

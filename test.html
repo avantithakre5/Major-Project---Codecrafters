@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word Art Animation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background: #181a20;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .centered {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+    .large.row {
+      margin-top: 60px;
+      margin-bottom: 30px;
+    }
+    .text-xl {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .clip {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+    .clip span:first-child {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+    .clip .clone {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      width: 100%;
+      color: #23a2f6;
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="large centered row">
+    <p class="text-xl" id="word-art">Split and clone text.</p>
+  </div>
+  <div class="small row"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script>
+    // Split text into chars and wrap each in .clip, add .clone span for animation
+    function splitTextToClips(element) {
+      const text = element.textContent;
+      element.textContent = '';
+      const chars = [];
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const clip = document.createElement('span');
+        clip.className = 'clip';
+        clip.innerHTML = `<span>${char}</span><span class="clone">${char}</span>`;
+        element.appendChild(clip);
+        chars.push(clip);
+      }
+      return chars;
+    }
+
+    const wordArt = document.getElementById('word-art');
+    const chars = splitTextToClips(wordArt);
+
+    // Animate each char's .clone span upward, only one (or staggered group) visible at a time
+    function animateWordArt() {
+      const originals = chars.map(c => c.querySelector('span:first-child'));
+      const clones = chars.map(c => c.querySelector('.clone'));
+      anime.timeline({loop: true})
+        .add({
+          targets: clones,
+          translateY: ['100%', '0%'],
+          opacity: [0, 1],
+          easing: 'easeInOutQuad',
+          duration: 750,
+          delay: anime.stagger(150, {from: 'center'}),
+          begin: function() {
+            originals.forEach(o => o.style.opacity = '1');
+            clones.forEach(c => c.style.opacity = '0');
+          },
+          update: function(anim) {
+            // Only show the currently animating clone, hide others
+            const currentIndices = anim.animatables
+              .filter(a => a.target.style.opacity > 0.01)
+              .map(a => clones.indexOf(a.target));
+            originals.forEach((o, i) => {
+              if (currentIndices.includes(i)) {
+                o.style.opacity = '0';
+                clones[i].style.opacity = '1';
+              } else {
+                o.style.opacity = '1';
+                clones[i].style.opacity = '0';
+              }
+            });
+          },
+        })
+        .add({
+          targets: clones,
+          translateY: ['0%', '-100%'],
+          opacity: [1, 0],
+          easing: 'easeInOutQuad',
+          duration: 750,
+          delay: anime.stagger(150, {from: 'center'}),
+          offset: '+=350',
+          complete: function() {
+            originals.forEach(o => o.style.opacity = '1');
+            clones.forEach(c => c.style.opacity = '0');
+          }
+        });
+    }
+    animateWordArt();
+  </script>
+</body>
+</html>
